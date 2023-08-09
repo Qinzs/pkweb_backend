@@ -13,7 +13,7 @@ public class UserInfo {
         user.put("name", "Pankaj Kumar");
         user.put("email", "111");
         user.put("phone", "222");
-
+        user.put("address", "333")
         return user;
     }
 }
