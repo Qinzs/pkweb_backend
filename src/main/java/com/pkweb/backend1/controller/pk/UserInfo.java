@@ -12,6 +12,8 @@ public class UserInfo {
         Map<String, String> user = new HashMap<>();
         user.put("name", "Pankaj Kumar");
         user.put("email", "111");
+        user.put("phone", "222");
+
         return user;
     }
 }
