@@ -1,19 +1,26 @@
 package com.pkweb.backend1.controller.pk;
+
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import java.util.HashMap;
 import java.util.Map;
 
 @RequestMapping("/pk")
 @RestController
 public class UserInfo {
-    @RequestMapping("/user")
-    public Map<String, String> getUser() {
-        Map<String, String> user = new HashMap<>();
-        user.put("name", "Pankaj Kumar");
-        user.put("email", "111");
-        user.put("phone", "222");
-        user.put("address", "333");
-        return user;
+
+    @PostMapping("/user")
+    public Map<String, String> getUser(@RequestBody LoginRequest loginRequest) {
+        Map<String, String> response = new HashMap<>();
+        if ("123".equals(loginRequest.getAccount()) && "456".equals(loginRequest.getPassword())) {
+            response.put("status", "200");
+        } else {
+            response.put("status", "error");
+        }
+        return response;
     }
 }
+
+
