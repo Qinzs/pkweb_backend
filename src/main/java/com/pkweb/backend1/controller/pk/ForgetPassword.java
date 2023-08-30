@@ -16,7 +16,7 @@ public class ForgetPassword {
 
     // Store user's email and new password
     String UserEmail = "z1605235289@gmail.com";
-    String newPassword = "789";
+    String newPassword = "1789";
 
     String code = "000000";
 
