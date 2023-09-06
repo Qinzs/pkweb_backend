@@ -17,7 +17,7 @@ public class UserInfo {
         if ("123".equals(loginRequest.getAccount()) && "456".equals(loginRequest.getPassword())) {
             response.put("status", "200");
         } else {
-            response.put("status", "error");
+            response.put("status", "err1or");
         }
         return response;
     }
