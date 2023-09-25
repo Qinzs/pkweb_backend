@@ -1,4 +1,4 @@
-package com.pkweb.backend1.controller.pk;
+package com.pkweb.backend1.entity;
 
 import java.sql.Blob;
 import java.sql.Date;

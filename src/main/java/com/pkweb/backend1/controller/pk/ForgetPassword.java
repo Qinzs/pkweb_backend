@@ -1,5 +1,7 @@
 package com.pkweb.backend1.controller.pk;
 
+import com.pkweb.backend1.entity.User;
+import com.pkweb.backend1.Dao.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,7 +11,6 @@ import java.util.Random;
 
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.stereotype.Service;
 
 @RestController
 public class ForgetPassword {
