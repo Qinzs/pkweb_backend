@@ -17,4 +17,7 @@ public interface UserMapper {
     @Update("update users set Username = #{Username},Password = #{Password},Email = #{Email}," +
             "RegistrationDate = #{RegistrationDate},LastLoginDate = #{LastLoginDate}, Profile = #{Profile} where UserID = #{UserID}")
     public void updateTargetUser(User user);
+
+    @Select("select Username from users where UserID = #{UserID}")
+    public List<String> findNameById(Integer UserID);
 }
