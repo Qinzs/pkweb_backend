@@ -10,8 +10,8 @@ import java.util.List;
 @Mapper
 public interface AnswerMapper {
 
-    @Insert("insert into answer(UserID,Content,DateTime,AuthorName)" +
-            "Values (#{UserID},#{Content},#{DateTime},#{AuthorName}")
+    @Insert("insert into answer(UserID,Content,DateTime,AuthorName,PublishID)" +
+            "Values (#{UserID},#{Content},#{DateTime},#{AuthorName},#{PublishID}")
     public void createAnswer(Answer answer);
 
     @Select(("SELECT * from answer"))
@@ -32,9 +32,12 @@ public interface AnswerMapper {
     public Date findDateTimeByID(Integer AnswerID);
 
     @Update("update answer set UserID=#{UserID},Content=#{Content},DataTime = #{DateTime}," +
-            "AuthorName=#{AuthorName} where AnswerID = #{AnswerID}")
+            "AuthorName=#{AuthorName},PublishID = #{PublishID} where AnswerID = #{AnswerID}")
     public void updateAnswer(Answer answer);
 
     @Delete("Delete from answer where AnswerID = #{AnswerID}")
     public void deleteAnswerByID(Integer AnswerID);
+
+    @Select("SELECT * from answer where PublishID = #{PublishID}")
+    public List<Answer> findAnswerByPublishID(Integer PublishID);
 }

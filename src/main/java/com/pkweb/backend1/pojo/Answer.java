@@ -9,17 +9,27 @@ public class Answer {
     String AuthorName;
     String Content;
 
+    Integer PublishID;
+
     public Answer() {
     }
 
-    public Answer(Integer answerID, Integer userID, Date dateTime, String authorName, String content) {
+    public Answer(Integer answerID, Integer userID, Date dateTime, String authorName, String content, Integer publishID) {
         AnswerID = answerID;
         UserID = userID;
         DateTime = dateTime;
         AuthorName = authorName;
         Content = content;
+        PublishID = publishID;
     }
 
+    public Integer getPublishID() {
+        return PublishID;
+    }
+
+    public void setPublishID(Integer publishID) {
+        PublishID = publishID;
+    }
 
     public String getAuthorName() {
         return AuthorName;
@@ -68,6 +78,7 @@ public class Answer {
                 ", DateTime=" + DateTime +
                 ", AuthorName='" + AuthorName + '\'' +
                 ", Content='" + Content + '\'' +
+                ", PublishID=" + PublishID +
                 '}';
     }
 }
