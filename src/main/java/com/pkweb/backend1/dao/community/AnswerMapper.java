@@ -1,10 +1,11 @@
-package com.pkweb.backend1.Dao;
+package com.pkweb.backend1.dao.community;
 
-import com.pkweb.backend1.entity.Answer;
-import com.pkweb.backend1.entity.Publish;
+import com.pkweb.backend1.pojo.Answer;
+import com.pkweb.backend1.pojo.Publish;
 import org.apache.ibatis.annotations.*;
 
 import java.sql.Date;
+import java.util.List;
 
 @Mapper
 public interface AnswerMapper {
@@ -13,20 +14,22 @@ public interface AnswerMapper {
             "Values (#{UserID},#{Content},#{DateTime},#{AuthorName}")
     public void createAnswer(Answer answer);
 
+    @Select(("SELECT * from answer"))
+    public List<Answer> returnAll();
     @Select("SELECT * from answer where AnswerID = #{AnswerID}")
-    public Publish findAnswerByID();
+    public Publish findAnswerByID(Integer AnswerID);
 
     @Select("SELECT UserID from answer where AnswerID = #{AnswerID}")
-    public String findUserIDByID();
+    public String findUserIDByID(Integer AnswerID);
 
     @Select("SELECT AuthorName from answer where AnswerID = #{AnswerID}")
-    public String findAuthorNameByID();
+    public String findAuthorNameByID(Integer AnswerID);
 
     @Select("SELECT Content from answer where AnswerID = #{AnswerID}")
     public String findContentByID();
 
     @Select("SELECT DateTime from answer where AnswerID = #{AnswerID}")
-    public Date findDateTimeByID();
+    public Date findDateTimeByID(Integer AnswerID);
 
     @Update("update answer set UserID=#{UserID},Content=#{Content},DataTime = #{DateTime}," +
             "AuthorName=#{AuthorName} where AnswerID = #{AnswerID}")

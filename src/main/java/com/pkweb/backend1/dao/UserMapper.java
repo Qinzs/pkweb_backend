@@ -1,6 +1,6 @@
-package com.pkweb.backend1.Dao;
+package com.pkweb.backend1.dao;
 
-import com.pkweb.backend1.entity.User;
+import com.pkweb.backend1.pojo.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;

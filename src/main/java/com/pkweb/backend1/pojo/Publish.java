@@ -1,4 +1,4 @@
-package com.pkweb.backend1.entity;
+package com.pkweb.backend1.pojo;
 
 import java.sql.Date;
 

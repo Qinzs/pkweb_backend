@@ -1,7 +1,7 @@
 package com.pkweb.backend1.controller.pk;
 
-import com.pkweb.backend1.entity.User;
-import com.pkweb.backend1.Dao.UserMapper;
+import com.pkweb.backend1.pojo.User;
+import com.pkweb.backend1.dao.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
