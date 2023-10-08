@@ -23,6 +23,7 @@ public class Community {
     @Autowired
     AnswerMapper answerMapper;
 
+    // return all publishes
     @RequestMapping("/community")
     public List<Publish> returnPublish(){
         return publishMapper.returnAll();
@@ -39,7 +40,7 @@ public class Community {
     }
      */
     @RequestMapping ("/askQuestions")
-    public String newPublish(@RequestBody Publish publish){
+    public String createPublish(@RequestBody Publish publish){
         String authorName = publishMapper.findNameByID(publish.getUserID());
         publish.setAuthorName(authorName);
         setAnswerLatest(publish);
@@ -49,28 +50,57 @@ public class Community {
     }
 
 
+    /*  add an answer in a Publish object
+     *  The url looks like: http://localhost:3000/addAnswer?publishID=1
+     *  The input json data looks like:
+     *
+     *  {
+     *   "UserID" : 1,
+     *   "Content" : "hi4"
+     *  }
+     */
     @RequestMapping("/addAnswer")
-    public void addAnswer(@RequestBody Integer publishID, Answer answer){
+    public String addAnswer(@RequestParam("publishID") Integer publishID, @RequestBody Answer answer){
         Publish publish = publishMapper.findPublishByID(publishID);
+        String authorName = publishMapper.findNameByID(publish.getUserID());
+        answer.setAuthorName(authorName);
         publish.setAnswerNumber(publish.getAnswerNumber()+1);
         answer.setPublishID(publish.getPublishID());
-        answerMapper.createAnswer(answer);
+        setAnswerDateTime(answer);
         setAnswerLatest(publish);
+        answerMapper.createAnswer(answer);
+        return "add done!";
+    }
+
+
+    /*  return all questions which in the particular publish object
+     *  the url looks like:
+     *  http://localhost:3000/communities?publishID=1
+     *  the input json data looks like:
+     *  {
+     *   "UserID" : 1,
+     *   "Content" : "h4"
+     *  }
+     */
+    @RequestMapping("/communities")
+    public List<Answer> checkAnswers(@RequestParam("publishID") Integer publishID){
+        return answerMapper.findAnswerByPublishID(publishID);
     }
 
     public void setAnswerLatest(@RequestBody Publish publish){
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         publish.setAnswerLatest(timestamp);
     }
+
+    public void setAnswerDateTime(@RequestBody Answer answer){
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        answer.setDateTime(timestamp);
+    }
     // -----------------------Other Operation Methods-------------------------------------------------
     // Don't know how to give front-end
     public void add1View(@RequestBody Publish publish){
         publish.setViews(publish.getViews()+1);
         publishMapper.updatePublish(publish);
-    }
-
-    public List<Answer> returnAllQuestion(Publish publish){
-        return answerMapper.findAnswerByPublishID(publish.getPublishID());
     }
 
 

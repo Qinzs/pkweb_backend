@@ -11,7 +11,7 @@ import java.util.List;
 public interface AnswerMapper {
 
     @Insert("insert into answer(UserID,Content,DateTime,AuthorName,PublishID)" +
-            "Values (#{UserID},#{Content},#{DateTime},#{AuthorName},#{PublishID}")
+            "Values (#{UserID},#{Content},#{DateTime},#{AuthorName},#{PublishID})")
     public void createAnswer(Answer answer);
 
     @Select(("SELECT * from answer"))

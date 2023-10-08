@@ -1,20 +1,29 @@
 package com.pkweb.backend1.pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.sql.Date;
+import java.sql.Time;
+import java.sql.Timestamp;
 
 public class Answer {
+    @JsonFormat
     Integer AnswerID;
+    @JsonFormat
     Integer UserID;
-    Date DateTime;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    Timestamp DateTime;
+    @JsonFormat
     String AuthorName;
+    @JsonFormat
     String Content;
-
+    @JsonFormat
     Integer PublishID;
 
     public Answer() {
     }
 
-    public Answer(Integer answerID, Integer userID, Date dateTime, String authorName, String content, Integer publishID) {
+    public Answer(Integer answerID, Integer userID, Timestamp dateTime, String authorName, String content, Integer publishID) {
         AnswerID = answerID;
         UserID = userID;
         DateTime = dateTime;
@@ -54,11 +63,11 @@ public class Answer {
         UserID = userID;
     }
 
-    public Date getDateTime() {
+    public Timestamp getDateTime() {
         return DateTime;
     }
 
-    public void setDateTime(Date dateTime) {
+    public void setDateTime(Timestamp dateTime) {
         DateTime = dateTime;
     }
 
