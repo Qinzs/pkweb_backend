@@ -10,7 +10,7 @@ import java.util.List;
 @Mapper
 public interface PublishMapper {
     @Insert("insert into publish(UserID,Content,AnswerNumber,Views,AnswerLatest,AuthorName)" +
-            "Values (#{UserID},#{Content},#{AnswerNumber},#{Views},#{AnswerLatest},#{AuthorName}")
+            "Values (#{UserID},#{Content},#{AnswerNumber},#{Views},#{AnswerLatest},#{AuthorName})")
     public void createPublish(Publish publish);
 
     @Select(("SELECT * from publish"))

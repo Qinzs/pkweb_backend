@@ -10,24 +10,28 @@ public class Publish {
     private Integer Views;
     private Date AnswerLatest;
 
+    private String AuthorName;
+
     public Publish() {
     }
 
-    public Publish(Integer publishID, Integer userID, String content, Integer answerNumber, Integer views, Date answerLatest) {
+    public Publish(Integer publishID, Integer userID, String content, Integer answerNumber, Integer views, Date answerLatest, String authorName) {
         PublishID = publishID;
         UserID = userID;
         Content = content;
         AnswerNumber = answerNumber;
         Views = views;
         AnswerLatest = answerLatest;
+        AuthorName = authorName;
     }
 
-    public Publish(Integer userID, String content, Integer answerNumber, Integer views, Date answerLatest) {
+    public Publish(Integer userID, String content, Integer answerNumber, Integer views, Date answerLatest, String authorName) {
         UserID = userID;
         Content = content;
         AnswerNumber = answerNumber;
         Views = views;
         AnswerLatest = answerLatest;
+        AuthorName = authorName;
     }
 
     public Integer getPublishID() {
@@ -87,6 +91,7 @@ public class Publish {
                 ", AnswerNumber=" + AnswerNumber +
                 ", Views=" + Views +
                 ", AnswerLatest=" + AnswerLatest +
+                ", AuthorName='" + AuthorName + '\'' +
                 '}';
     }
 }
