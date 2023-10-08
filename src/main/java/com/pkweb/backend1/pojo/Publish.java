@@ -22,6 +22,14 @@ public class Publish {
         AnswerLatest = answerLatest;
     }
 
+    public Publish(Integer userID, String content, Integer answerNumber, Integer views, Date answerLatest) {
+        UserID = userID;
+        Content = content;
+        AnswerNumber = answerNumber;
+        Views = views;
+        AnswerLatest = answerLatest;
+    }
+
     public Integer getPublishID() {
         return PublishID;
     }
