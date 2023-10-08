@@ -102,7 +102,4 @@ public class Community {
         publish.setViews(publish.getViews()+1);
         publishMapper.updatePublish(publish);
     }
-
-
-
 }
