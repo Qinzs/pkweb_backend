@@ -1,6 +1,5 @@
 package com.pkweb.backend1.dao.community;
 
-import com.pkweb.backend1.pojo.Answer;
 import com.pkweb.backend1.pojo.Publish;
 import org.apache.ibatis.annotations.*;
 
@@ -19,8 +18,11 @@ public interface PublishMapper {
     @Select("SELECT PublishID from publish")
     public List<Integer> PublishIDList();
 
+    @Select("SELECT Username from users where UserID = #{UserID}")
+    public String findNameByID(Integer UserID);
+
     @Select("SELECT * from publish where PublishID = #{PublishID}")
-    public Publish findPublishByID();
+    public Publish findPublishByID(Integer publishID);
 
     @Select("SELECT Content from publish where PublishID = #{PublishID}")
     public String findContentByID();

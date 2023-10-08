@@ -1,21 +1,33 @@
 package com.pkweb.backend1.pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.sql.Date;
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.time.LocalTime;
 
 public class Publish {
+    @JsonFormat
     private Integer PublishID;
+    @JsonFormat
     private Integer UserID;
+    @JsonFormat
     private String Content;
+    @JsonFormat
     private Integer AnswerNumber;
+    @JsonFormat
     private Integer Views;
-    private Date AnswerLatest;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Timestamp AnswerLatest;
 
+    @JsonFormat
     private String AuthorName;
 
     public Publish() {
     }
 
-    public Publish(Integer publishID, Integer userID, String content, Integer answerNumber, Integer views, Date answerLatest, String authorName) {
+    public Publish(Integer publishID, Integer userID, String content, Integer answerNumber, Integer views, Timestamp answerLatest, String authorName) {
         PublishID = publishID;
         UserID = userID;
         Content = content;
@@ -25,12 +37,20 @@ public class Publish {
         AuthorName = authorName;
     }
 
-    public Publish(Integer userID, String content, Integer answerNumber, Integer views, Date answerLatest, String authorName) {
-        UserID = userID;
-        Content = content;
-        AnswerNumber = answerNumber;
-        Views = views;
-        AnswerLatest = answerLatest;
+//    public Publish(Integer userID, String content, Integer answerNumber, Integer views, Date answerLatest, String authorName) {
+//        UserID = userID;
+//        Content = content;
+//        AnswerNumber = answerNumber;
+//        Views = views;
+//        AnswerLatest = answerLatest;
+//        AuthorName = authorName;
+//    }
+
+    public String getAuthorName() {
+        return AuthorName;
+    }
+
+    public void setAuthorName(String authorName) {
         AuthorName = authorName;
     }
 
@@ -74,11 +94,11 @@ public class Publish {
         Views = views;
     }
 
-    public Date getAnswerLatest() {
+    public Timestamp getAnswerLatest() {
         return AnswerLatest;
     }
 
-    public void setAnswerLatest(Date answerLatest) {
+    public void setAnswerLatest(Timestamp answerLatest) {
         AnswerLatest = answerLatest;
     }
 

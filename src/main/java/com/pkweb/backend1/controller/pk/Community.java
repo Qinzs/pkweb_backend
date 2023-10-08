@@ -4,11 +4,16 @@ import com.pkweb.backend1.dao.community.AnswerMapper;
 import com.pkweb.backend1.dao.community.PublishMapper;
 import com.pkweb.backend1.pojo.Answer;
 import com.pkweb.backend1.pojo.Publish;
+import com.pkweb.backend1.pojo.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Date;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.List;
+
+import static java.time.LocalTime.now;
 
 @RestController
 public class Community {
@@ -23,15 +28,30 @@ public class Community {
         return publishMapper.returnAll();
     }
 
+
+    /* Add a new publish
+    front-end give json data like this:
+    {
+    "UserID" : 1,
+    "Content" : "hi3",
+    "AnswerNumber" : 0,
+    "Views" : 0
+    }
+     */
     @RequestMapping ("/askQuestions")
-    public String newQuestions(@RequestBody Publish publish){
-//        publishMapper.createPublish(publish);
+    public String newPublish(@RequestBody Publish publish){
+        String authorName = publishMapper.findNameByID(publish.getUserID());
+        publish.setAuthorName(authorName);
+        setAnswerLatest(publish);
+        publishMapper.createPublish(publish);
         System.out.println(publish.toString());
         return "Publish created!";
     }
 
+
     @RequestMapping("/addAnswer")
-    public void addAnswer(@RequestBody Publish publish, Answer answer){
+    public void addAnswer(@RequestBody Integer publishID, Answer answer){
+        Publish publish = publishMapper.findPublishByID(publishID);
         publish.setAnswerNumber(publish.getAnswerNumber()+1);
         answer.setPublishID(publish.getPublishID());
         answerMapper.createAnswer(answer);
@@ -39,9 +59,8 @@ public class Community {
     }
 
     public void setAnswerLatest(@RequestBody Publish publish){
-        java.util.Date currentDate = new java.util.Date();
-        java.sql.Date sqlCurrentDate = new java.sql.Date(currentDate.getTime());
-        publish.setAnswerLatest(sqlCurrentDate);
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        publish.setAnswerLatest(timestamp);
     }
     // -----------------------Other Operation Methods-------------------------------------------------
     // Don't know how to give front-end
