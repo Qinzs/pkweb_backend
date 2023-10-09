@@ -1,4 +1,4 @@
-package com.pkweb.backend1.dao;
+package com.pkweb.backend1.Repositories;
 
 import com.pkweb.backend1.pojo.User;
 import org.apache.ibatis.annotations.Mapper;
