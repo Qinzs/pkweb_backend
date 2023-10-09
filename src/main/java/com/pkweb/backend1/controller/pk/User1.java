@@ -23,7 +23,7 @@ public class User1 {
 
         @GetMapping("/ids")
         public List<Map<String, Object>> getUserIds() {
-            String sql = "SELECT * FROM User1";
+            String sql = "SELECT * FROM [User]";
             return jdbcTemplate.queryForList(sql);
         }
     }
