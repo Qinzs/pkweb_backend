@@ -1,16 +1,13 @@
-package com.pkweb.backend1.controller.pk;
+package com.pkweb.backend1.Controllers;
 
-import com.pkweb.backend1.dao.community.AnswerMapper;
-import com.pkweb.backend1.dao.community.PublishMapper;
+import com.pkweb.backend1.Repositories.community.AnswerMapper;
+import com.pkweb.backend1.Repositories.community.PublishMapper;
 import com.pkweb.backend1.pojo.Answer;
 import com.pkweb.backend1.pojo.Publish;
-import com.pkweb.backend1.pojo.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.Date;
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 import static java.time.LocalTime.now;

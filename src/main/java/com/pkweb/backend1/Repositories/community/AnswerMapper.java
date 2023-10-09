@@ -1,4 +1,4 @@
-package com.pkweb.backend1.dao.community;
+package com.pkweb.backend1.Repositories.community;
 
 import com.pkweb.backend1.pojo.Answer;
 import com.pkweb.backend1.pojo.Publish;
