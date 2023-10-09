@@ -85,10 +85,7 @@ public class UserController {
         userProfile.put("publishes", userPublishes);
         Hibernate.initialize(userAnswers);
         Hibernate.initialize(userPublishes);
-
         return new ResponseEntity<>(userProfile, HttpStatus.OK);
     }
-
-
 }
 
