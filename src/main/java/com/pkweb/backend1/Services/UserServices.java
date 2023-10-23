@@ -65,6 +65,13 @@ public class UserServices {
         return publishRepository.findByUser_UserId(userId);
     }
 
-
+    public User getUserById(String userId) {
+        try {
+            Integer intUserId = Integer.parseInt(userId);
+            return UserRepositories.findById(intUserId).orElse(null);
+        } catch (NumberFormatException e) {
+            // userId 字符串不是一个有效的整数
+            return null;
+        }    }
 }
 

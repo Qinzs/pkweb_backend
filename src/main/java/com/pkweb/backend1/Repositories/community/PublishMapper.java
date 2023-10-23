@@ -1,4 +1,4 @@
-package com.pkweb.backend1.Repositories.community;
+package com.pkweb.backend1.Repositories;
 
 import com.pkweb.backend1.pojo.Publish;
 import org.apache.ibatis.annotations.*;
@@ -8,8 +8,8 @@ import java.util.List;
 
 @Mapper
 public interface PublishMapper {
-    @Insert("insert into publish(UserID,Content,AnswerNumber,Views,AnswerLatest,AuthorName)" +
-            "Values (#{UserID},#{Content},#{AnswerNumber},#{Views},#{AnswerLatest},#{AuthorName})")
+    @Insert("insert into publish(UserID,Content,AnswerNumber,Views,AnswerLatest,AuthorName,Title)" +
+            "Values (#{UserID},#{Content},#{AnswerNumber},#{Views},#{AnswerLatest},#{AuthorName},#{Title})")
     public void createPublish(Publish publish);
 
     @Select(("SELECT * from publish"))
@@ -18,7 +18,7 @@ public interface PublishMapper {
     @Select("SELECT PublishID from publish")
     public List<Integer> PublishIDList();
 
-    @Select("SELECT Username from users where UserID = #{UserID}")
+    @Select("SELECT Username from User where UserID = #{UserID}")
     public String findNameByID(Integer UserID);
 
     @Select("SELECT * from publish where PublishID = #{PublishID}")
@@ -26,6 +26,9 @@ public interface PublishMapper {
 
     @Select("SELECT Content from publish where PublishID = #{PublishID}")
     public String findContentByID();
+
+    @Select("SELECT Title from publish where PublishID = #{PublishID}")
+    public String findTitleByID();
 
     @Select("SELECT AnswerNumber from publish where PublishID = #{PublishID}")
     public Integer findAnswerNumberByID();
@@ -36,7 +39,7 @@ public interface PublishMapper {
     @Select("SELECT AnswerLatest from publish where PublishID = #{PublishID}")
     public Date findAnswerLastestByID();
 
-    @Update("update publish set UserID=#{UserID},Content=#{Content},AnswerNumber=#{AnswerNumber}," +
+    @Update("update publish set UserID=#{UserID},Title =#{Title},Content=#{Content},AnswerNumber=#{AnswerNumber}," +
             "Views=#{Views},AnswerLatest=#{AnswerLatest},AuthorName=#{AuthorName} where PublishID = #{PublishID}")
     public void updatePublish(Publish publish);
 
