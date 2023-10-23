@@ -1,4 +1,4 @@
-package com.pkweb.backend1.Repositories;
+package com.pkweb.backend1.Repositories.community;
 
 import com.pkweb.backend1.pojo.Publish;
 import org.apache.ibatis.annotations.*;
