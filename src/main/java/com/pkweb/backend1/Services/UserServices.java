@@ -1,9 +1,11 @@
 package com.pkweb.backend1.Services;
 
+import com.pkweb.backend1.Entity.Contact;
 import com.pkweb.backend1.Entity.answer;
 import com.pkweb.backend1.Entity.publish;
 import com.pkweb.backend1.Entity.User;
 import com.pkweb.backend1.Repositories.AnswerRepository;
+import com.pkweb.backend1.Repositories.ContactRepository;
 import com.pkweb.backend1.Repositories.PublishRepository;
 import com.pkweb.backend1.Repositories.UserRepositories;
 import org.slf4j.Logger;
@@ -25,6 +27,9 @@ public class UserServices {
 
     @Autowired
     private PublishRepository publishRepository;
+    @Autowired
+    private ContactRepository ContactRepository;
+
     // 获取所有用户
     public List<User> getAllUsers() {
         return UserRepositories.findAll();
@@ -55,8 +60,6 @@ public class UserServices {
     public List<answer> getAnswersByUserId(Integer userId) {
         List<answer> answers = answerRepository.findByUser_UserId(userId);
 
-        LOGGER.info("Fetched answersdaasasds for userId {}: {}", userId, answers);
-
         return answerRepository.findByUser_UserId(userId);
     }
 
@@ -72,6 +75,11 @@ public class UserServices {
         } catch (NumberFormatException e) {
             // userId 字符串不是一个有效的整数
             return null;
-        }    }
+        }
+    }
+
+    public List<Contact> getContactsByUserId(Integer userId) {
+        return ContactRepository.findByIdUserId(userId);
+    }
 }
 

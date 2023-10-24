@@ -37,6 +37,10 @@ public class UserService {
         return user;
     }
 
+    public void saveUser(User user) {
+        userRepository.save(user);
+    }
+
     // You can remove the loginUser method for password verification, as password encryption is removed.
 
     // public User loginUser(String username, String password) {

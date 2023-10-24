@@ -1,7 +1,6 @@
 //package com.pkweb.backend1.pojo;
-//
+//import com.pkweb.backend1.Entity.User;
 //import jakarta.persistence.*;
-//
 //@Entity
 //@Table(name = "user_points")
 //public class UserPoints {

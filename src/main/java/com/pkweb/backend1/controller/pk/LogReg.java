@@ -23,8 +23,7 @@ public class LogReg {
         String username = request.get("username");
         String password = request.get("password");
         String email = request.get("email");
-
-//        User user = userService.registerUser(username, password,email);
+        User user = userService.registerUser(username, password,email);
 
         return ResponseEntity.ok("user");
     }
@@ -43,6 +42,9 @@ public class LogReg {
         userDTO.setUsername(user.getUsername());
         userDTO.setEmail(user.getEmail());
         userDTO.setLastLoginDate(user.getLastLoginDate());
+        //登录后，更新最后登录时间
+        user.setLastLoginDate(new java.sql.Date(new java.util.Date().getTime()));
+        userService.saveUser(user);
 
         return ResponseEntity.ok(userDTO);
     }
