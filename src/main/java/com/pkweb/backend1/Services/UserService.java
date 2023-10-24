@@ -5,6 +5,8 @@ import com.pkweb.backend1.Entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
+
 @Service
 public class UserService {
     @Autowired
@@ -22,6 +24,17 @@ public class UserService {
         user.setEmail(email);
 
         return userRepository.save(user);
+    }
+
+    public User loginUser(String username, String password) {
+        User user = userRepository.findByUsername(username);
+        if (!Objects.equals(password, user.getPassword())) {
+            //打印出具体密码
+            System.out.println("password: " + password);
+            System.out.println("user.getPassword(): " + user.getPassword());
+            throw new RuntimeException("用户名或密码不正确");
+        }
+        return user;
     }
 
     // You can remove the loginUser method for password verification, as password encryption is removed.
