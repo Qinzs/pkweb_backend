@@ -107,5 +107,14 @@ public class Match {
     }
 
 
+    @Transient  // 用这个注解标记，表示这个属性不是一个数据库字段
+    private String problemName;
 
+    public String getProblemName() {
+        return problemName;
+    }
+
+    public void setProblemName(String problemName) {
+        this.problemName = problemName;
+    }
 }

@@ -45,4 +45,8 @@ public interface PublishMapper {
 
     @Delete("Delete from publish where PublishID = #{PublishID}")
     public void deletePublishByID(Integer PublishID);
+
+    //根据用户ID查找发布的帖子
+    @Select("SELECT * from publish where UserID = #{UserID}")
+    public List<Publish> findPublishByUserID(Integer UserID);
 }

@@ -40,4 +40,8 @@ public interface AnswerMapper {
 
     @Select("SELECT * from answer where PublishID = #{PublishID}")
     public List<Answer> findAnswerByPublishID(Integer PublishID);
+
+    //根据用户ID查找发布的帖子
+    @Select("SELECT * from answer where UserID = #{UserID}")
+    public List<Answer> findAnswerByUserID(Integer UserID);
 }

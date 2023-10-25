@@ -22,16 +22,18 @@ public class publish {
     @Column(name = "Content")
     private String content;
 
-    @Column(name = "AnswerNumber", nullable = false)
-    private int answerNumber;
+    @Column(name = "AnswerNumber", nullable = true)
+    private Integer answerNumber;
+
 
     @Column(name = "AuthorName", nullable = false)
     private String authorName;
 
-    @Column(name = "Views", nullable = false)
-    private int views;
+    @Column(name = "Views", nullable = true)
+    private Integer views;
 
-    @Column(name = "AnswerLatest", nullable = false)
+
+    @Column(name = "AnswerLatest", nullable = true)
     private Timestamp answerLatest;
 
     // Getter and Setter methods

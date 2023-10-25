@@ -111,4 +111,8 @@ public class Problem {
     public Long getId() {
         return (long) problemID;
     }
+
+    public String getProblemName() {
+        return title;
+    }
 }

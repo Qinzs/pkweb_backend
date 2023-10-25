@@ -1,15 +1,15 @@
 package com.pkweb.backend1.Controllers;
-import com.pkweb.backend1.Entity.Contact;
-import com.pkweb.backend1.Entity.answer;
-import com.pkweb.backend1.Entity.publish;
-import com.pkweb.backend1.Entity.User;
-import com.pkweb.backend1.Repositories.ContactRepository;
+import com.pkweb.backend1.Entity.*;
+import com.pkweb.backend1.Repositories.*;
 import com.pkweb.backend1.Services.UserServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
-
+import com.pkweb.backend1.Repositories.community.AnswerMapper;
+import com.pkweb.backend1.Repositories.community.PublishMapper;
+import com.pkweb.backend1.pojo.Answer;
+import com.pkweb.backend1.pojo.Publish;
 import java.util.*;
 
 import org.hibernate.Hibernate;
@@ -22,6 +22,26 @@ public class UserController {
 
     @Autowired
     private UserServices userServices;
+    @Autowired
+    private PublishRepository publishRepository;
+
+    @Autowired
+    private AnswerRepository answerRepository;
+
+    @Autowired
+    private MatchRepository matchRepository;
+
+    @Autowired
+    private PublishMapper PublishMapper;
+
+    @Autowired
+    private AnswerMapper AnswerMapper;
+
+    @Autowired
+    private ProblemRepository problemRepository;
+
+    @Autowired
+    private SubmissionRepository submissionRepository;
 
     // 获取所有用户
     @GetMapping
@@ -82,7 +102,12 @@ public class UserController {
 
         // 将所有数据组合到一个Map中
         Map<String, Object> userProfile = new HashMap<>();
-        userProfile.put("userInfo", user);
+        //userProfile.put("userInfo", user);
+        userProfile.put("id", user.getUserId());
+        userProfile.put("username", user.getUsername());
+// ... 其他需要的属性 ...
+        userProfile.put("email", user.getEmail());
+        userProfile.put("lastLoginDate", user.getLastLoginDate());
         //计算userAnswers的长度，然后放进去
         userProfile.put("answersCount", userAnswers.size());  // 获取并存储答案的数量
         userProfile.put("publishesCount", userPublishes.size());  // 获取并存储发布的数量
@@ -98,12 +123,30 @@ public class UserController {
 
     //写一个接口查询用户发布的讨论，回答的问题，最近的比赛
     @GetMapping("/profile/{id}/publishes")
-    public ResponseEntity<List<publish>> getUserPublishes(@PathVariable Integer id) {
-        List<publish> userPublishes = userServices.getPublishesByUserId(id);
-        if (userPublishes.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    public ResponseEntity<Map<String, Object>> getUserData(@PathVariable Integer id)
+    {
+        List<Publish> publishes = PublishMapper.findPublishByUserID(id);
+        List<Answer> answers = AnswerMapper.findAnswerByUserID(id);
+        Long userId = Long.valueOf(id);  // 将 Integer 转换为 Long
+        List<Match> matches = matchRepository.findByUser1IdOrUser2Id(userId, userId);  // 传递两次同样的 ID
+        //matches里有一个"problemId": 3, 但是没有"problemName": "第三题"，所以再去problem表里查一下
+        for (Match match : matches) {
+            Long problemIdLong = match.getProblemId();
+            Integer problemId = Math.toIntExact(problemIdLong);
+            Optional<Problem> problemOptional = problemRepository.findById(problemId);
+            if (problemOptional.isPresent()) {
+                Problem problem = problemOptional.get();
+                match.setProblemName( problem.getProblemName());
+            }
         }
-        return new ResponseEntity<>(userPublishes, HttpStatus.OK);
+
+        Map<String, Object> responseData = new HashMap<>();
+        responseData.put("publishes", publishes);
+        responseData.put("answers", answers);
+        responseData.put("matches", matches);
+
+
+        return ResponseEntity.ok(responseData);
     }
     //写一个接口查询用户的联系人
     @GetMapping("/{id}/contacts")
@@ -132,6 +175,39 @@ public class UserController {
 
         return new ResponseEntity<>(contactsInfo, HttpStatus.OK);
     }
+
+    //写一个接口查询用户的历史比赛
+    @GetMapping("/{id}/matches")
+    public ResponseEntity<List<Match>> getUserMatches(@PathVariable Integer id) {
+        Long userId = Long.valueOf(id);
+        List<Match> matches = matchRepository.findByUser1IdOrUser2Id(userId, userId);  // 传递两次同样的 ID
+        //matches里有一个"problemId": 3, 但是没有"problemName": "第三题"，所以再去problem表里查一下
+        for (Match match : matches) {
+            Long problemIdLong = match.getProblemId();
+            Integer problemId = Math.toIntExact(problemIdLong);
+            Optional<Problem> problemOptional = problemRepository.findById(problemId);
+            if (problemOptional.isPresent()) {
+                Problem problem = problemOptional.get();
+                match.setProblemName( problem.getProblemName());
+            }
+        }
+        return ResponseEntity.ok(matches);
+    }
+
+    //写一个接口查询用户的详情比赛
+    @GetMapping("/{id}/matches/{problemId}")
+    public ResponseEntity<Submission> getUserMatch(@PathVariable Long id, @PathVariable Long problemId) {
+
+        Optional<Submission> submissionOptional = submissionRepository.findTopByUserIdAndProblemIdOrderBySubmittedTimeDesc(id, problemId);
+
+        if (!submissionOptional.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(submissionOptional.get(), HttpStatus.OK);
+    }
+
+
 
 
     public class ContactDTO {
