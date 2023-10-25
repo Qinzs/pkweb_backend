@@ -18,7 +18,7 @@ public class WebSocketConfig implements WebSocketConfigurer {
                 .setAllowedOrigins("*");
 
         // 注册第二个WebSocket处理器
-        registry.addHandler(myNotificationHandler(), "/ws/notification")
+        registry.addHandler(myNotificationHandler(), "/ws/match")
                 .addInterceptors(new UserIdHandshakeInterceptor())
                 .setAllowedOrigins("*");
     }
@@ -31,6 +31,6 @@ public class WebSocketConfig implements WebSocketConfigurer {
     // 第二个WebSocket处理器的@Bean方法
     @Bean
     public WebSocketHandler myNotificationHandler() {
-        return new NotificationWebSocketHandler();
+        return new MatchingWebSocketHandler();
     }
 }

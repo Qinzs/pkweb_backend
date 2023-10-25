@@ -15,9 +15,11 @@ public class Publish {
     @JsonFormat
     private String Content;
     @JsonFormat
-    private Integer AnswerNumber;
+    private String Title;
     @JsonFormat
-    private Integer Views;
+    private Integer AnswerNumber = 0;
+    @JsonFormat
+    private Integer Views = 0;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Timestamp AnswerLatest;
 
@@ -27,10 +29,11 @@ public class Publish {
     public Publish() {
     }
 
-    public Publish(Integer publishID, Integer userID, String content, Integer answerNumber, Integer views, Timestamp answerLatest, String authorName) {
+    public Publish(Integer publishID, String title, Integer userID, String content, Integer answerNumber, Integer views, Timestamp answerLatest, String authorName) {
         PublishID = publishID;
         UserID = userID;
         Content = content;
+        Title = title;
         AnswerNumber = answerNumber;
         Views = views;
         AnswerLatest = answerLatest;
@@ -64,6 +67,14 @@ public class Publish {
 
     public Integer getUserID() {
         return UserID;
+    }
+
+    public String getTitle() {
+        return Title;
+    }
+
+    public void setTitle(String title) {
+        Title = title;
     }
 
     public void setUserID(Integer userID) {
@@ -108,6 +119,7 @@ public class Publish {
                 "PublishID=" + PublishID +
                 ", UserID=" + UserID +
                 ", Content='" + Content + '\'' +
+                ", Title='" + Title + '\'' +
                 ", AnswerNumber=" + AnswerNumber +
                 ", Views=" + Views +
                 ", AnswerLatest=" + AnswerLatest +
