@@ -18,7 +18,7 @@ public interface PublishMapper {
     @Select("SELECT PublishID from publish")
     public List<Integer> PublishIDList();
 
-    @Select("SELECT Username from User where UserID = #{UserID}")
+    @Select("SELECT Username from [User] where UserID = #{UserID}")
     public String findNameByID(Integer UserID);
 
     @Select("SELECT * from publish where PublishID = #{PublishID}")
