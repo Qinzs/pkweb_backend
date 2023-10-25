@@ -13,15 +13,24 @@ public class WebSocketConfig implements WebSocketConfigurer {
 
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-        registry.addHandler(myHandler(), "/ws")
-                .addInterceptors(new UserIdHandshakeInterceptor())  // 添加这行
-                .setAllowedOrigins("*");  // 允许所有来源
+        registry.addHandler(myChatHandler(), "/ws/chat")
+                .addInterceptors(new UserIdHandshakeInterceptor())
+                .setAllowedOrigins("*");
+
+        // 注册第二个WebSocket处理器
+        registry.addHandler(myNotificationHandler(), "/ws/notification")
+                .addInterceptors(new UserIdHandshakeInterceptor())
+                .setAllowedOrigins("*");
     }
 
     @Bean
-    public WebSocketHandler myHandler() {
+    public WebSocketHandler myChatHandler() {
         return new MyWebSocketHandler();
     }
+
+    // 第二个WebSocket处理器的@Bean方法
+    @Bean
+    public WebSocketHandler myNotificationHandler() {
+        return new NotificationWebSocketHandler();
+    }
 }
-
-
