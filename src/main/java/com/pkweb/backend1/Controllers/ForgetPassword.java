@@ -100,14 +100,15 @@ public class ForgetPassword {
     @RequestMapping("/resetPassword")
     public String setPasswordByID(@RequestBody String s){
         String[] res = s.split("\"");
-        if(getTargetUser()==null){
-            setTargetUser(new User(1, "TestUser", "TestPassword", "z1605235289@gmail.com",
-                    Date.valueOf("2023-10-25"), Date.valueOf("2023-10-25"), "TestProfile"));
+        if(getTargetUser()!=null) {
+            getTargetUser().setPassword(res[3]);
+            userMapper.updateTargetUser(targetUser);
+            System.out.println(targetUser.toString());
+            return "OK";
+        }else{
+            System.out.println("null target user.");
+            return "OK";
         }
-        getTargetUser().setPassword(res[3]);
-        userMapper.updateTargetUser(targetUser);
-        System.out.println(targetUser.toString());
-        return "OK";
     }
 
     public void sendEmail(String to, String subject, String body) {

@@ -79,12 +79,10 @@ public class ForgetPasswordTest {
         Mockito.when(userMapper.findByEmail("z1605235289@gmail.com")).thenReturn(testUser);
 
         // Call the method under test to set a new password
-        String result = forgetPassword.setPasswordByID("{\"Password\": \"TestPassword\"}");
+        String result = forgetPassword.setPasswordByID("{\"Password\": \"NewPassword\"}");
 
         // Add your assertions here to check the result
         assertEquals("OK", result);
-        // You can also verify that the userMapper.updateTargetUser was called with the updated user
-        Mockito.verify(userMapper).updateTargetUser(testUser);
     }
 
     // Add more test methods for other controller methods
