@@ -15,4 +15,5 @@ public interface UserPointsRepository extends JpaRepository<UserPoints, Long> {
 
 
     List<UserPoints> findTop15ByOrderByPointsDesc();
+
 }

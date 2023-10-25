@@ -21,7 +21,7 @@ import java.util.Base64;
 
         public String submitCode(String source, String input, String expected) {
             JSONObject requestBody = new JSONObject();
-            requestBody.put("language_id", 92); // Assuming Python; adjust if different languages are used
+            requestBody.put("language_id", 53); // Assuming Python; adjust if different languages are used
             requestBody.put("source_code", Base64.getEncoder().encodeToString(source.getBytes()));
             requestBody.put("stdin", Base64.getEncoder().encodeToString(input.getBytes()));  // Encoding the input using Base64
 

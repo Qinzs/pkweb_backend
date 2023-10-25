@@ -27,6 +27,7 @@ public class UserPoints {
         this.points = points;
     }
 
+
     // Getter 和 Setter 方法
 
     public Long getId() {
@@ -51,5 +52,9 @@ public class UserPoints {
 
     public void setPoints(int points) {
         this.points = points;
+    }
+
+    public UserPoints orElse(UserPoints userPoints) {
+        return null;
     }
 }

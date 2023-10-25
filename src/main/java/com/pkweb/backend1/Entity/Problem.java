@@ -32,7 +32,7 @@ public class Problem {
     @Column(name = "difficultyLevel")
     private String difficultyLevel;
 
-    @Column(name = "addBy")
+    @Column(name = "BasicCode")
     private String addBy;
 
     // ... Getters, setters, and other methods ...
@@ -108,4 +108,7 @@ public class Problem {
     }
 
 
+    public Long getId() {
+        return (long) problemID;
+    }
 }
