@@ -17,9 +17,9 @@ public class Publish {
     @JsonFormat
     private String Title;
     @JsonFormat
-    private Integer AnswerNumber;
+    private Integer AnswerNumber = 0;
     @JsonFormat
-    private Integer Views;
+    private Integer Views = 0;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Timestamp AnswerLatest;
 
