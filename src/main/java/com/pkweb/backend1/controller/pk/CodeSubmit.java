@@ -1,5 +1,6 @@
 package com.pkweb.backend1.controller.pk;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -10,47 +11,43 @@ import java.net.http.HttpResponse;
 import org.json.JSONObject;
 import java.util.Base64;
 
-@RequestMapping("/pk")
-@RestController
-public class CodeSubmit {
-    private String sourceCode;
-    private String stdin;
-    private String expectedOutput;
 
-    public void initializeValues() {
-        sourceCode = Base64.getEncoder().encodeToString("print(\"1\")".getBytes());
-        stdin = "";
-        expectedOutput = Base64.getEncoder().encodeToString("1\n".getBytes());
-    }
+    @RestController
+    @RequestMapping("/pk")
+    public class CodeSubmit {
 
-    @RequestMapping("/coderesult")
-    public String submitCode() {
-        initializeValues();
-        JSONObject requestBody = new JSONObject();
-        requestBody.put("language_id", 92);
-        requestBody.put("source_code", sourceCode);
-        requestBody.put("stdin", stdin);
-        requestBody.put("expected_output", expectedOutput);
+        @Value("63a227cf39mshecd0ef4d413fbe3p11bf08jsnc3e3b7aa79d4")  // Assuming you have the API key in a properties or yml file
+        private String rapidApiKey;
 
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create("https://judge0-ce.p.rapidapi.com/submissions?base64_encoded=true&fields=*"))
-                .header("content-type", "application/json")
-                .header("Content-Type", "application/json")
-                .header("X-RapidAPI-Key", "63a227cf39mshecd0ef4d413fbe3p11bf08jsnc3e3b7aa79d4")
-                .header("X-RapidAPI-Host", "judge0-ce.p.rapidapi.com")
-                .method("POST", HttpRequest.BodyPublishers.ofString(requestBody.toString()))
-                .build();
-        try {
-            HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
-            JSONObject jsonObject = new JSONObject(response.body());
-            String token = jsonObject.getString("token");
-            Thread.sleep(5000); // Wait for 10 seconds
-            return getSubmitCodeResult(token);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "Error: " + e.getMessage();
+        public String submitCode(String source, String input, String expected) {
+            JSONObject requestBody = new JSONObject();
+            requestBody.put("language_id", 92); // Assuming Python; adjust if different languages are used
+            requestBody.put("source_code", Base64.getEncoder().encodeToString(source.getBytes()));
+            requestBody.put("stdin", Base64.getEncoder().encodeToString(input.getBytes()));  // Encoding the input using Base64
+
+            requestBody.put("expected_output", Base64.getEncoder().encodeToString(expected.getBytes()));
+
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create("https://judge0-ce.p.rapidapi.com/submissions?base64_encoded=true&fields=*"))
+                    .header("content-type", "application/json")
+                    .header("X-RapidAPI-Key", rapidApiKey)
+                    .header("X-RapidAPI-Host", "judge0-ce.p.rapidapi.com")
+                    .method("POST", HttpRequest.BodyPublishers.ofString(requestBody.toString()))
+                    .build();
+            try {
+                HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+                JSONObject jsonObject = new JSONObject(response.body());
+                String token = jsonObject.getString("token");
+
+                // You may need a better way to ensure the code has been judged
+                Thread.sleep(5000);  // Still 5 seconds; consider adjusting or using a loop to check periodically
+
+                return getSubmitCodeResult(token);
+            } catch (Exception e) {
+                e.printStackTrace();
+                return "Error: " + e.getMessage();
+            }
         }
-    }
 
     private String getSubmitCodeResult(String token) {
         HttpRequest request = HttpRequest.newBuilder()
