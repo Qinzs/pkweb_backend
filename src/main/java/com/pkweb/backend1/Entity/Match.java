@@ -1,5 +1,6 @@
 package com.pkweb.backend1.Entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -23,9 +24,11 @@ public class Match {
     private Long problemId;
 
     @Column(name = "StartTime")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime startTime;
 
     @Column(name = "EndTime")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime endTime;
 
     @Column(name = "WinnerID")
