@@ -15,7 +15,7 @@ public class UserPointsController {
     private UserPointsService userPointsService;
 
     @GetMapping("/user/{userId}")
-    public int getUserPoints(@PathVariable Long userId) {
+    public int getUserPoints(@PathVariable int userId) {
         // 通过用户ID查询用户的积分
         User user = new User();
         user.setUserId(Math.toIntExact(userId)); // 设置用户ID
@@ -30,7 +30,7 @@ public class UserPointsController {
     }
 
     @GetMapping("/percentile/{userId}")
-    public double getPlayerPercentile(@PathVariable Long userId) {
+    public double getPlayerPercentile(@PathVariable int userId) {
         double percentile = userPointsService.calculatePercentile(userId);
         return percentile;
     }

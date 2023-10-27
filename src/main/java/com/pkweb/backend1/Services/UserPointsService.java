@@ -8,7 +8,6 @@ import com.pkweb.backend1.Repositories.UserPointsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -23,7 +22,7 @@ public class UserPointsService {
         return userPointsRepository.findByUser(user);
     }
 
-    public double calculatePercentile(Long userId) {
+    public double calculatePercentile(int userId) {
         // 查询数据库中所有玩家的积分，并按积分降序排列
         List<UserPoints> allUserPoints = userPointsRepository.findAllByOrderByPointsDesc();
 
