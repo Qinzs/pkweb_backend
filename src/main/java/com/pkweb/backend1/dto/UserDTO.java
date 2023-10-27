@@ -12,7 +12,6 @@ public class UserDTO {
         this.userId = user.getUserId();
         this.username = user.getUsername();
         // 假设User中的getProfile()方法返回byte[]类型的数据
-        this.profile = Base64.getEncoder().encodeToString(user.getProfile());
     }
 
     // getter and setters ...

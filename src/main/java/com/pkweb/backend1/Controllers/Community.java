@@ -59,8 +59,8 @@ public class Community {
     @RequestMapping("/addAnswer")
     public String addAnswer(@RequestParam("publishID") Integer publishID, @RequestBody Answer answer){
         Publish publish = publishMapper.findPublishByID(publishID);
-        String authorName = publishMapper.findNameByID(publish.getUserID());
-        answer.setAuthorName(authorName);
+//        String authorName = publishMapper.findNameByID(publish.getUserID());
+//        answer.setAuthorName(authorName);
         publish.setAnswerNumber(publish.getAnswerNumber()+1);
         answer.setPublishID(publish.getPublishID());
         setAnswerDateTime(answer);

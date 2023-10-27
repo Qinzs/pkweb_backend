@@ -152,8 +152,13 @@ public class UserController {
     @GetMapping("/{id}/contacts")
     public ResponseEntity<List<ContactDTO>> getUserContacts(@PathVariable Integer id) {
         List<Contact> contacts = userServices.getContactsByUserId(id);
-
+        //打印出来看看
+        for (Contact contact : contacts) {
+            System.out.println(contact);
+        }
         if (contacts.isEmpty()) {
+            //打印出
+            System.out.println("contacts is empty");
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
@@ -167,7 +172,7 @@ public class UserController {
             if (contactUserOptional.isPresent()) {
                 User contactUser = contactUserOptional.get();
                 contactDTO.setUsername(contactUser.getUsername().trim()); // 使用trim()方法删除任何额外的空格
-                contactDTO.setProfile(contactUser.getProfile());
+                //contactDTO.setProfile(contactUser.getProfile());
             }
 
             return contactDTO;
@@ -213,7 +218,6 @@ public class UserController {
     public class ContactDTO {
         private Integer contactId;
         private String username;
-        private String profile; // 这里我假设profile是一个String类型，你可以根据需要调整。
 
         public void setContactId(Integer contactId) {
             this.contactId = contactId;
@@ -223,11 +227,7 @@ public class UserController {
             this.username = trim;
         }
 
-        public void setProfile(byte[] profile) {
-            //this.profile = Arrays.toString(profile);
-            this.profile = Base64.getEncoder().encodeToString(profile);
 
-        }
 
         // Getter, Setter, and other methods...
         public Integer getContactId() {
@@ -238,9 +238,9 @@ public class UserController {
             return username;
         }
 
-        public String getProfile() {
-            return profile;
-        }
+//        public String getProfile() {
+//            return profile;
+//        }
 
 
     }

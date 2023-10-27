@@ -40,6 +40,7 @@ public class MyWebSocketHandler extends TextWebSocketHandler {
 
             // 然后，您可以将IncomingMessage转换为ChatMessage实体
             ChatMessage chatMessage = new ChatMessage();
+            //根据socket送来的fromUser的id，从数据库中获取用户信息
             chatMessage.setFromUserId(String.valueOf(incomingMsg.getFromUser().getId()));
             chatMessage.setToUserId(String.valueOf(incomingMsg.getToContactId()));
             chatMessage.setContent(incomingMsg.getContent());
@@ -51,12 +52,28 @@ public class MyWebSocketHandler extends TextWebSocketHandler {
             System.err.println("Sending message: " + chatMessage);
 
             if (recipientSession != null && recipientSession.isOpen()) {
-                recipientSession.sendMessage(message);
+                // Convert chatMessage to JSON string
                 chatMessage.setStatus("read");
+//                String chatMessageJson = objectMapper.writeValueAsString(chatMessage);
+//                TextMessage textMessage = new TextMessage(chatMessageJson);
+                User fromUserEntity = userService.getUserById(chatMessage.getFromUserId());  // 获取发送消息用户的详细信息
+                UserDTO fromUserDTO = new UserDTO(fromUserEntity);  // 将User实体转换为UserDTO
+                ExtendedChatMessage extendedChatMessage = new ExtendedChatMessage(chatMessage, fromUserDTO);  // 使用UserDTO创建ExtendedChatMessage
+
+                String extendedChatMessageJson = objectMapper.writeValueAsString(extendedChatMessage);  // Convert ExtendedChatMessage to JSON string
+                TextMessage textMessage = new TextMessage(extendedChatMessageJson);
+
+                //WebSocketSession recipientSession = usersSessions.get(chatMessage.getToUserId());
+
+                //打印出来
+                System.out.println("textMessage: " + textMessage);
+                recipientSession.sendMessage(textMessage);
+
             } else {
                 chatMessage.setStatus("unread");
             }
             chatMessageService.sendMessage(chatMessage);
+
 
         } catch (Exception e) {
             // 处理任何异常

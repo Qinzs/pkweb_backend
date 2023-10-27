@@ -102,7 +102,7 @@ public class ForgetPassword {
         String[] res = s.split("\"");
         if(getTargetUser()!=null) {
             getTargetUser().setPassword(res[3]);
-            userMapper.updateTargetUser(targetUser);
+            userMapper.updatePassword(targetUser);
             System.out.println(targetUser.toString());
             return "OK";
         }else{
