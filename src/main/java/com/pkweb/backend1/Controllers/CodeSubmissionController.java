@@ -53,7 +53,7 @@ public class CodeSubmissionController {
         // 解析JSON字符串
         JSONObject jsonObject1 = new JSONObject(result);
         String time = jsonObject1.optString("time", "0");
-        int memory = jsonObject1.getInt("memory");
+        int memory = jsonObject1.optInt("memory", 0);
         String statusDescription = jsonObject1.getJSONObject("status").getString("description");
         Submission submission = new Submission();
 
