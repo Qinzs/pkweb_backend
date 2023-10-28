@@ -8,6 +8,7 @@ import com.pkweb.backend1.controller.pk.CodeSubmit;
 import org.apache.catalina.Store;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
@@ -93,17 +94,25 @@ private ContactRepository contactRepository;
             responseMap.put("matchId", matchId);
 
             String response = objectMapper.writeValueAsString(responseMap);
+            //首先判断这两个
             // 创建从 userId1 到 userId2 的联系关系
             Contact contact1 = new Contact();
             contact1.setUserId((int) Long.parseLong((String) user1.getAttributes().get("userId")));
             contact1.setContactId((int) Long.parseLong((String) user2.getAttributes().get("userId")));
-            contactRepository.save(contact1);
+
 
             // 创建从 userId2 到 userId1 的联系关系
             Contact contact2 = new Contact();
             contact2.setUserId((int) Long.parseLong((String) user2.getAttributes().get("userId")));
             contact2.setContactId((int) Long.parseLong((String) user1.getAttributes().get("userId")));
-            contactRepository.save(contact2);
+            try {
+                contactRepository.saveAndFlush(contact1);
+                contactRepository.saveAndFlush(contact2);
+            } catch (DataIntegrityViolationException e) {
+                // 捕获违反主键约束的异常
+                System.out.println("好友对已存在");
+            }
+
             user1.sendMessage(new TextMessage(response));
             user2.sendMessage(new TextMessage(response));
 
