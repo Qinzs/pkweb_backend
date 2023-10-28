@@ -2,10 +2,7 @@ package com.pkweb.backend1.WebSocketHandler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pkweb.backend1.Entity.*;
-import com.pkweb.backend1.Repositories.MatchRepository;
-import com.pkweb.backend1.Repositories.SubmissionRepository;
-import com.pkweb.backend1.Repositories.UserPointsRepository;
-import com.pkweb.backend1.Repositories.UserRepository;
+import com.pkweb.backend1.Repositories.*;
 import com.pkweb.backend1.Services.ProblemService;
 import com.pkweb.backend1.controller.pk.CodeSubmit;
 import org.apache.catalina.Store;
@@ -43,7 +40,8 @@ public class MatchingWebSocketHandler extends TextWebSocketHandler {
     private UserPointsRepository userPointsRepository;
     @Autowired
     private UserRepository userRepository;
-
+@Autowired
+private ContactRepository contactRepository;
     private ObjectMapper objectMapper = new ObjectMapper();  // Jackson's JSON processor
 
     @Override
@@ -95,7 +93,17 @@ public class MatchingWebSocketHandler extends TextWebSocketHandler {
             responseMap.put("matchId", matchId);
 
             String response = objectMapper.writeValueAsString(responseMap);
+            // 创建从 userId1 到 userId2 的联系关系
+            Contact contact1 = new Contact();
+            contact1.setUserId((int) Long.parseLong((String) user1.getAttributes().get("userId")));
+            contact1.setContactId((int) Long.parseLong((String) user2.getAttributes().get("userId")));
+            contactRepository.save(contact1);
 
+            // 创建从 userId2 到 userId1 的联系关系
+            Contact contact2 = new Contact();
+            contact2.setUserId((int) Long.parseLong((String) user2.getAttributes().get("userId")));
+            contact2.setContactId((int) Long.parseLong((String) user1.getAttributes().get("userId")));
+            contactRepository.save(contact2);
             user1.sendMessage(new TextMessage(response));
             user2.sendMessage(new TextMessage(response));
 
