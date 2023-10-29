@@ -92,6 +92,9 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>com.pkweb.backend1.Backend1Application</mainClass>
+                </configuration>
                 <version>3.1.2</version>
             </plugin>
         </plugins>
