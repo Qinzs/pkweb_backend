@@ -7,6 +7,8 @@ import com.pkweb.backend1.Repositories.UserMapper;
 import com.pkweb.backend1.Repositories.UserPointsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -36,7 +38,11 @@ public class UserPointsService {
             UserPoints userPoints = allUserPoints.get(i);
             // 获取当前用户的排名
             if (userPoints.getId().intValue() == userId){
-                return   (double)(allUserPoints.size()-1-i)/(allUserPoints.size()-1) * 100;
+                double one = (double)(allUserPoints.size()-1-i)/(allUserPoints.size()-1) * 100;;
+                DecimalFormat format = new DecimalFormat("#.0");
+                String str = format.format(one);
+                double four = Double.parseDouble(str);
+                return four;
             }
         }
         return 0.0;
