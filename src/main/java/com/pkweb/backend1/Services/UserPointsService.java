@@ -35,7 +35,7 @@ public class UserPointsService {
         for (int i = 0; i < allUserPoints.size(); i++) {
             UserPoints userPoints = allUserPoints.get(i);
             // 获取当前用户的排名
-            if (userPoints.getId().equals(userId)){
+            if (userPoints.getId().intValue() == userId){
                 return   (double)(allUserPoints.size()-1-i)/(allUserPoints.size()-1) * 100;
             }
         }
